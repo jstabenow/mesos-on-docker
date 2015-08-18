@@ -37,7 +37,7 @@ Current problems:
 
 Slave couldn't recover the old states => old running docker-tasks are orphans
 ```sh
---docker_kill_orphans="true"
+--docker_kill_orphans="true" --recover="cleanup"
 I0818 08:06:23.975733 16042 state.cpp:672] Failed to find resources file '/tmp/mesos/meta/resources/resources.info'
 I0818 08:06:23.975903 16042 state.cpp:79] Failed to find the latest slave from '/tmp/mesos/meta'
 ````
