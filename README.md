@@ -33,13 +33,5 @@ docker run -d --name slave --net host --pid host --privileged --restart always \
                   --credential=/root/credentials \
 ```
 
-Current problems:
-
-Slave couldn't recover the old states => old running docker-tasks are orphans
-```sh
---docker_kill_orphans="true" --recover="cleanup"
-I0818 08:06:23.975733 16042 state.cpp:672] Failed to find resources file '/tmp/mesos/meta/resources/resources.info'
-I0818 08:06:23.975903 16042 state.cpp:79] Failed to find the latest slave from '/tmp/mesos/meta'
-````
-
-Solution => Don't kill the contianer ;-) Stop/Start/Restart work!
+FAQ:
+- ``docker stop/start/restart`` work - kill and run again couldn't recover the old states
