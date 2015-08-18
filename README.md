@@ -13,7 +13,7 @@ CMD ["/usr/bin/mesos"]
 
 Example to run Mesos-Slave:
 ```sh
-docker run -d --name slave --net host --pid=host --privileged --restart always \
+docker run -d --name slave --net host --pid host --privileged --restart always \
               -v /sys:/sys \
               -v /var/run/docker.sock:/var/run/docker.sock \
               -v /root:/root \
