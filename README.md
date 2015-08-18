@@ -23,7 +23,6 @@ Example to run Mesos-Slave:
 docker run -d --name slave --net host --pid host --privileged --restart always \
               -v /sys/fs/cgroup:/sys/fs/cgroup \
               -v /var/run/docker.sock:/var/run/docker.sock \
-              -v /tmp/mesos:/tmp/mesos \
               -v /root:/root \
                 jstabenow/mesos:0.23.0 slave \
                   --master="zk://10.11.12.13:2181,10.11.12.14:2181,10.11.12.15:2181/mesos" \
@@ -34,4 +33,4 @@ docker run -d --name slave --net host --pid host --privileged --restart always \
 ```
 
 FAQ:
-- ``docker stop/start/restart`` work - kill and run again couldn't recover the old states
+- ``docker stop/start/restart`` work - kill and run again couldn't recover the old states (-v /tmp/mesos is nonsense)
