@@ -1,0 +1,18 @@
+[Unit]
+Description=Marathon
+After=mesos-master.service
+Requires=docker.service
+Requires=zookeeper.service
+Requires=mesos-master.service
+
+[Service]
+TimeoutStartSec=0
+EnvironmentFile=/etc/environment
+ExecStartPre=-/usr/bin/docker kill marathon
+ExecStartPre=-/usr/bin/docker rm marathon
+ExecStart=/usr/bin/docker run --name marathon --net host -v /mnt/datastore:/mnt/datastore mesosphere/marathon --master zk://${MESOS_ZK}/mesos --zk zk://${MESOS_ZK}/marathon --hostname ${MESOS_HOSTNAME} --event_subscriber http_callback --http_endpoints http://mconn.marathon.mesos:31999/v1/queue --checkpoint --zk_max_versions 5 --http_credentials admin:kamikaze --artifact_store file:///mnt/datastore/artifact_store --webui_url http://${MESOS_IPV4}:8080 --max_tasks_per_offer 6
+ExecStop=/usr/bin/docker stop marathon
+ExecReload=/usr/bin/docker restart marathon
+
+[Install]
+WantedBy=multi-user.target
