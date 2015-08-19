@@ -16,7 +16,7 @@ users:
     passwd: $6$rounds=4096$35VUVaBHK$rzj0XHn95AXthCpRUz7BVhJEsYchvaAsn9zdFuPXCraNM/0unZIPx14i8KdaIgiaQ2JXaRazgfLd5tLfS3X5H.
     groups:
       - sudo
-      - docke
+      - docker
 write_files:
   - path: /etc/hosts
     permissions: 0644
