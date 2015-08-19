@@ -1,0 +1,16 @@
+[Unit]
+Description=Zookeeper
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+EnvironmentFile=/etc/environment
+ExecStartPre=/usr/bin/docker kill zookeeper
+ExecStartPre=/usr/bin/docker rm zookeeper
+ExecStart=/usr/bin/docker run --name zookeeper --net host --restart always -e MYID=${ZOOKEEPER_ID} -e SERVERS=${ZOOKEEPER_NODES} -v /mnt/shares/zookeeper/version-2:/tmp/zookeeper/version-2 mesoscloud/zookeeper:3.4.6-ubuntu-14.04
+ExecStop=/usr/bin/docker stop zookeeper
+ExecReload=/usr/bin/docker restart zookeeper
+
+[Install]
+WantedBy=multi-user.target
