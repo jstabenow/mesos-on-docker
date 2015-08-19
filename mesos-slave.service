@@ -1,0 +1,18 @@
+[Unit]
+Description=Mesos-Slave
+After=mesos-master.service
+Requires=docker.service
+Requires=zookeeper.service
+Requires=mesos-master.service
+
+[Service]
+TimeoutStartSec=0
+EnvironmentFile=/etc/environment
+ExecStartPre=/usr/bin/docker kill mesos-slave
+ExecStartPre=/usr/bin/docker rm mesos-slave
+ExecStart=/usr/bin/docker run -v /sys/fs/cgroup:/sys/fs/cgroup -v /var/run/docker.sock:/var/run/docker.sock -v /tmp/mesos:/tmp/mesos --name mesos-slave --net host --privileged --restart always --pid host jstabenow/mesos:0.23.0 /usr/bin/mesos slave --master="zk://${MESOS_ZK}/mesos" --hostname="${MESOS_HOSTNAME}" --log_dir="/var/log/mesos" --cgroups_enable_cfs --docker_remove_delay=1hrs
+ExecStop=/usr/bin/docker stop mesos-slave
+ExecReload=/usr/bin/docker restart mesos-slave
+
+[Install]
+WantedBy=multi-user.target
