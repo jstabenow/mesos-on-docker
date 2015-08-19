@@ -1,0 +1,34 @@
+#cloud-config
+hostname: slave1
+coreos:
+  units:
+    - name: 00-eth0.network
+      runtime: true
+      content: |
+        [Match]
+        Name=eth0
+        [Network]
+        DNS=8.8.8.8
+        Address=10.11.12.13/24
+        Gateway=10.11.12.1
+users:
+  - name: admin
+    passwd: $6$rounds=4096$35VUVaBHK$rzj0XHn95AXthCpRUz7BVhJEsYchvaAsn9zdFuPXCraNM/0unZIPx14i8KdaIgiaQ2JXaRazgfLd5tLfS3X5H.
+    groups:
+      - sudo
+      - docke
+write_files:
+  - path: /etc/hosts
+    permissions: 0644
+    owner: root
+    content: |
+      127.0.0.1 localhost
+      10.11.12.13 slave1
+  - path: /etc/environment
+    content: |
+      MESOS_IPV4=10.11.12.13
+      MESOS_HOSTNAME=slave1
+      MESOS_ZK=10.11.12.13:2181
+      MESOS_QUORUM=1
+      ZOOKEEPER_ID=1
+      ZOOKEEPER_NODES=10.11.12.13
