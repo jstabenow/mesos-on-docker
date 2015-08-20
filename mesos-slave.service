@@ -1,9 +1,7 @@
 [Unit]
 Description=Mesos-Slave
-After=mesos-master.service
+After=docker.service
 Requires=docker.service
-Requires=zookeeper.service
-Requires=mesos-master.service
 
 [Service]
 TimeoutStartSec=0
