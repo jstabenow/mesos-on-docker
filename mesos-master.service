@@ -1,8 +1,7 @@
 [Unit]
 Description=Mesos-Master
-After=zookeeper.service
+After=docker.service
 Requires=docker.service
-Requires=zookeeper.service
 
 [Service]
 TimeoutStartSec=0
