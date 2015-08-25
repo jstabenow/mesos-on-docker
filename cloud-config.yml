@@ -2,11 +2,22 @@
 hostname: slave1
 coreos:
   units:
+    - name: settimezone.service
+      command: start
+      content: |
+        [Unit]
+        Description=Set the time zone
+        
+        [Service]
+        ExecStart=/usr/bin/timedatectl set-timezone Europe/Berlin
+        RemainAfterExit=yes
+        Type=oneshot
     - name: 00-eth0.network
       runtime: true
       content: |
         [Match]
         Name=eth0
+        
         [Network]
         DNS=8.8.8.8
         Address=10.11.12.13/24
